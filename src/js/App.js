@@ -42,7 +42,9 @@ class App extends React.Component {
                 </div>
                 {/* Progress - end */}
 
-                <Question currentQuestion={currentQuestion}/>
+                <Question
+                    onSelectAnswer={this.onSelectAnswer}
+                    currentQuestion={currentQuestion} />
                 {/* Results - start */}
                 <div className="results">
                   <div className="loader"><div className="icon"></div></div>
