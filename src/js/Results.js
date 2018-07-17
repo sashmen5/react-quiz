@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Answers from "./Answers";
 
-const Results = ({loadNewQuestion, allAnswers, allQuestions}) => {
+const Results = ({loadNewQuestion, allAnswers, allQuestions, onLoadResults}) => {
     return (
         <div className={`results fade-out ${loadNewQuestion ? 'fade-out-active' : ''}`}>
             <div className="loader">
@@ -16,7 +16,9 @@ const Results = ({loadNewQuestion, allAnswers, allQuestions}) => {
                     allQuestions={allQuestions}/>
             </div>
             <div className="text-center">
-                <button className="btn btn-dark">Submit</button>
+                <button className="btn btn-dark" onClick={(e)=> {
+                    onLoadResults();
+                }}>Submit</button>
             </div>
         </div>
     )
@@ -26,6 +28,7 @@ Results.propTypes = {
     loadNewQuestion: PropTypes.bool.isRequired,
     allAnswers: PropTypes.array.isRequired,
     allQuestions: PropTypes.array.isRequired,
+    onLoadResults: PropTypes.func.isRequired
 };
 
 export default Results;

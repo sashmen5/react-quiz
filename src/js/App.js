@@ -12,7 +12,8 @@ class App extends React.Component {
             progress: 0,
             allAnswers: [],
             loadNewQuestion: false,
-            showResults: false
+            showResults: false,
+            loadingResults: false
         }
     }
 
@@ -47,11 +48,25 @@ class App extends React.Component {
             }
         }, 300);
     };
+
+    onLoadResults = () => {
+        this.setState({
+            loadingResults: true
+        });
+
+        setTimeout(() => {
+            this.setState({
+                loadingResults: false,
+                resultsLoaded: true,
+                correctAnswers: ['KLM','Port of Shanghai', '337.60 km', '590 km/h', '2617 km']
+            });
+        }, 1000)
+    };
     render(){
-        const {currentQuestion, loadNewQuestion, showResults, allQuestions, allAnswers} = this.state;
+        const {currentQuestion, loadNewQuestion, showResults, allQuestions, allAnswers, loadingResults} = this.state;
 
         return (
-            <div>
+            <div className={`${loadingResults ? 'is-loading-results' : ''}`}>
                   
               {/* Header - start */}
               <header>
@@ -80,6 +95,7 @@ class App extends React.Component {
                           loadNewQuestion={loadNewQuestion}
                           currentQuestion={currentQuestion}
                       /> : <Results
+                          onLoadResults={this.onLoadResults}
                           allAnswers={allAnswers}
                           allQuestions={allQuestions}
                           loadNewQuestion={loadNewQuestion}/>
