@@ -2,6 +2,8 @@ import React from 'react';
 import data from './data/Data';
 import Question from "./Question";
 import Results from "./Results";
+import Progress from "./Progress";
+import Arrow from "./Arrow";
 class App extends React.Component {
 
     constructor(props){
@@ -50,6 +52,22 @@ class App extends React.Component {
         }, 300);
     };
 
+    goToPrevQuestion = () => {
+        const {progress, allQuestions} = this.state;
+
+        this.setState({
+            loadNewQuestion: true
+        });
+
+        setTimeout(()=> {
+            this.setState({
+                progress: progress - 1,
+                loadNewQuestion: false,
+                currentQuestion: allQuestions[progress - 1]
+            })
+        }, 300)
+    };
+
     onLoadResults = () => {
         this.setState({
             loadingResults: true
@@ -64,8 +82,9 @@ class App extends React.Component {
         }, 1000)
     };
     render(){
-        const {currentQuestion, loadNewQuestion, showResults, allQuestions, allAnswers, loadingResults, resultsLoaded, correctAnswers} = this.state;
+        const {currentQuestion, loadNewQuestion, progress, showResults, allQuestions, allAnswers, loadingResults, resultsLoaded, correctAnswers} = this.state;
 
+        const navIsActive = allAnswers.length > 0;
         return (
             <div className={`${loadingResults ? 'is-loading-results' : ''} ${resultsLoaded ? 'is-showing-results' : 'no-results-loaded'}`}>
                   
@@ -76,22 +95,13 @@ class App extends React.Component {
                       src="https://ihatetomatoes.net/react-tutorials/abc-quiz/images/plane.svg" />
               </header>
               {/* Header - end */}
-
               {/* Content - start */}
               <div className={`content`}>
+                  <Progress total={allQuestions.length} progress={allAnswers.length}/>
 
-                {/* Progress - start */}
-                <div className="progress-container">
-                  <div className="progress-label">1 of 5 answered</div>
-                  <div className="progress">
-                    <div className="progress-bar" style={{'width': `20%`}}>
-                      <span className="sr-only">20% Complete</span>
-                    </div>
-                  </div>
-                </div>
-                {/* Progress - end */}
                   {
                       !showResults ? <Question
+                          allAnswers={allAnswers}
                           onSelectAnswer={this.onSelectAnswer}
                           loadNewQuestion={loadNewQuestion}
                           currentQuestion={currentQuestion}
@@ -106,13 +116,15 @@ class App extends React.Component {
               {/* Content - end */}
 
               {/* Navigation - start */}
-              <div className={`navigation text-center is-active`}>
-                <button className={`arrow`}>
-                    <img src="https://ihatetomatoes.net/react-tutorials/abc-quiz/fonts/navigation-left-arrow.svg" />
-                </button>
-                <button disabled className={`arrow is-disabled`}>
-                    <img src="https://ihatetomatoes.net/react-tutorials/abc-quiz/fonts/navigation-right-arrow.svg" />
-                </button>
+              <div className={`navigation text-center ${navIsActive ? 'is-active' : ''}`}>
+                <Arrow direction="left"
+                       goToPrevQuestion={this.goToPrevQuestion}
+                       progress={progress}
+                       allAnswers={allAnswers}/>
+                <Arrow direction="right"
+                       goToNextQuestion={this.goToNextQuestion}
+                       progress={progress}
+                       allAnswers={allAnswers}/>
               </div>
               {/* Navigation - end */}
 
