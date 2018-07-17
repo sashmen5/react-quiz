@@ -1,12 +1,24 @@
 import React from 'react';
-
+import data from './data/Data';
+import Question from "./Question";
 class App extends React.Component {
 
     constructor(props){
         super(props);
-
+        this.state = {
+            allQuestions: data.allQuestions,
+            currentQuestion: data.allQuestions[4],
+            progress: 0,
+            allAnswers: []
+        }
     }
+
+    onSelectAnswer = (answer) => {
+        console.log('Answer selected ' + answer);
+    };
     render(){
+        const {currentQuestion} = this.state;
+
         return (
             <div>
                   
@@ -30,26 +42,7 @@ class App extends React.Component {
                 </div>
                 {/* Progress - end */}
 
-                {/* Question - start */}
-                <div className={`question`}>
-
-                  <h1>What is the best city in the world?</h1>
-
-                  {/* Choices - start */}
-                  <div className="choices">
-                    
-                    {/* Buttons - start */}
-                    <button className="btn btn-huge is-selected"><span className="letter">A</span> Melbourne</button>
-                    <button className="btn btn-huge"><span className="letter">B</span> New York</button>
-                    <button className="btn btn-huge"><span className="letter">C</span> London</button>
-                    {/* Buttons - end */}
-
-                  </div>
-                  {/* Choices - end */}
-
-                </div>
-                {/* Question - end */}
-
+                <Question currentQuestion={currentQuestion}/>
                 {/* Results - start */}
                 <div className="results">
                   <div className="loader"><div className="icon"></div></div>
