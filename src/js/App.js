@@ -5,6 +5,20 @@ import Results from "./Results";
 import Progress from "./Progress";
 import Arrow from "./Arrow";
 import defaultImage from '../images/truck.svg';
+import bus from '../images/bus.svg';
+import bycicle from '../images/bycicle.svg';
+import car from '../images/car.svg';
+import plane from '../images/plane.svg';
+import ship from '../images/ship.svg';
+
+
+const IMAGES = {
+    bus: bus,
+    bycicle: bycicle,
+    car: car,
+    plane: plane,
+    ship: ship,
+};
 
 class App extends React.Component {
 
@@ -107,10 +121,8 @@ class App extends React.Component {
 
     render() {
         const {currentQuestion, loadNewQuestion, progress, showResults, allQuestions, allAnswers, loadingResults, resultsLoaded, correctAnswers} = this.state;
-
-
         const {image} = currentQuestion;
-        const headerImage = !showResults ? image : defaultImage;
+        const headerImage = !showResults ? IMAGES[image] : defaultImage;
         const navIsActive = allAnswers.length > 0;
         return (
             <div
