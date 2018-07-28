@@ -115,14 +115,11 @@ class App extends React.Component {
         return (
             <div
                 className={`${loadingResults ? 'is-loading-results' : ''} ${resultsLoaded ? 'is-showing-results' : 'no-results-loaded'}`}>
-
-                {/* Header - start */}
                 <header>
                     <img
                         className={`fade-out ${loadNewQuestion ? 'fade-out-active' : ''}`}
                         src={headerImage}/>
                 </header>
-                {/* Header - end */}
                 <div className={`content`}>
                     <Progress total={allQuestions.length} progress={allAnswers.length}/>
 
